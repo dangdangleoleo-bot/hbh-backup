@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>深圳美术馆黄宾虹画展导览 | Huang Binhong Audio Guide</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Noto+Serif+SC:wght@500;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              paper: '#F9F7F2',
+              ink: '#333333',
+              rust: '#C86F67',
+              'rust-light': '#E8CBC8',
+              'stone-border': '#E5E0D8',
+              'off-white': '#FCFBF9',
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', '"Noto Serif SC"', 'serif'],
+              sans: ['Inter', 'sans-serif'],
+            },
+            animation: {
+              fadeIn: 'fadeIn 0.5s ease-in-out',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0', transform: 'translateY(10px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+            }
+          },
+        },
+      }
+    </script>
+
+    <!-- Custom CSS -->
+    <style>
+      /* Smooth Scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      body {
+        background-color: #F9F7F2; /* Paper color */
+        color: #333333; /* Ink color */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Hide scrollbar for nav but allow scroll */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Audio Player Customization (Basic) */
+      audio {
+        height: 32px;
+        filter: sepia(20%) saturate(80%);
+      }
+
+      /* Tap Highlight Removal */
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/"
+  }
+}
+</script>
+</head>
+<body class="font-sans min-h-screen pb-12 selection:bg-rust-light selection:text-ink">
+
+    <!-- App Container -->
+    <div id="app" class="max-w-3xl mx-auto relative">
+        
+        <!-- Header & Navigation -->
+        <header class="sticky top-0 z-50 bg-paper/95 backdrop-blur-md border-b border-stone-border shadow-sm transition-all">
+            <div class="py-4 px-4 text-center">
+                <h1 class="font-serif text-2xl font-bold text-ink tracking-wide">
+                    深圳美术馆黄宾虹画展导览
+                </h1>
+                <p class="text-[10px] text-gray-500 uppercase tracking-[0.2em] mt-1">Huang Binhong Exhibition</p>
+            </div>
+            
+            <!-- Navigation Tabs -->
+            <nav id="nav-tabs" class="flex px-2 overflow-x-auto no-scrollbar justify-center space-x-2 pb-3">
+                <!-- Tabs will be injected here by JS -->
+            </nav>
+        </header>
+
+        <!-- Main Content Area -->
+        <main id="main-content" class="px-4 pt-6 min-h-[60vh]">
+            <!-- Content will be injected here by JS -->
+        </main>
+
+        <!-- Footer -->
+        <footer class="px-4 py-8 text-center text-gray-400 text-xs border-t border-stone-border mt-12 mx-4">
+            <p class="font-serif italic">“Black ink, thick and heavy, yet clear and luminous.”</p>
+            <p class="mt-4 opacity-60">© 2025 Huang Binhong Art Exhibition by Dang</p>
+        </footer>
+
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // ==========================================
+        // 1. DATA CONFIGURATION (Editable)
+        // ==========================================
+        const EXHIBITION_DATA = [
+            {
+                id: 'unit-1',
+                title: '前言&地图',
+                subtitle: '爱好溪山为写真',
+                items: [
+                    {
+                        id: '1-1',
+                        title: '导览前言',
+                        imageUrl: './assets/images/0/1.jpg',
+                        audioUrl: ['./assets/audio/0/1.mp3', 
+                                   './assets/audio/0/2.mp3',
+                       ],        
+                        description: '黄宾虹是中国近现代绘画史上，与齐白石并称“南黄北齐”的一代宗师，是传统山水画走向现代的里程碑式人物。',
+                    },
+
+                   {
+                        id: '1-2',
+                        title: '展品地图',
+                        imageUrl: './assets/images/0/2.jpg',
+                        audioUrl: ['./assets/audio/0/3.mp3', 
+                                  
+                       ], 
+                        description: '这次涉及讲解的展品位置，如地图上的红色小圈所示.',
+                    },
+                  
+                ],
+            },
+            {
+                id: 'unit-2',
+                title: '第一单元',
+                subtitle: '搜尽奇峰打草稿',
+                items: [
+                    {
+                        id: '2-1',
+                        title: '序言',
+                        imageUrl: './assets/images/1/0.jpg',
+                        audioUrl: ['./assets/audio/1/0_1.mp3', 
+                                   './assets/audio/1/0_2.mp3',
+                       ],        
+                        description: '“君学”艺术是迎合他人的审美，注重外表的整齐华丽，讲究形式上的好看；而“民学”艺术则强调个性、自然和内在精神，不求形似但求内美',
+                    },
+                    {
+                       id: '2-2',
+                        title: '第一站：安徽',
+                        imageUrl: './assets/images/1/1.jpg',
+                        audioUrl: ['./assets/audio/1/1_0_1.mp3', 
+                                   './assets/audio/1/1_0_2.mp3', 
+                        ],
+                        description: '黄宾虹这92年的人生路，就像他笔下的山水一样，跌宕起伏。大约可分为四个阶段.',
+                    },
+                    {
+                        id: '2-3',
+                        title: '黄山西海门图轴',
+                        imageUrl: './assets/images/1/1_1.jpg',
+                        audioUrl: ['./assets/audio/1/1_1_1.mp3', 
+                                   './assets/audio/1/1_1_2.mp3', 
+                                   './assets/audio/1/1_1_3.mp3', 
+                                   './assets/audio/1/1_1_4.mp3', 
+                            ],
+                        description: '欣赏黄宾虹的画，有一句口诀：近观是笔触，退后是山林。',
+                    },
+                    {
+                        id: '2-4',
+                        title: '黄山云谷至西海门图轴',
+                         imageUrl: './assets/images/1/1_2.jpg',
+                        audioUrl: ['./assets/audio/1/1_2_1.mp3', 
+                                   './assets/audio/1/1_2_2.mp3', 
+                                   './assets/audio/1/1_2_3.mp3', 
+                                    
+                            ],
+                        description: '那一根根线条，凌乱中透着一种极度的自由和奔放，看得人心里激荡，感觉他不是在画石头，而是在释放一种积压已久的情绪。',
+                    },
+                    {
+                        id: '2-5',
+                        title: '黄山朱砂泉图轴',
+                         imageUrl: './assets/images/1/1_3.jpg',
+                        audioUrl: ['./assets/audio/1/1_3_1.mp3', 
+                                   './assets/audio/1/1_3_2.mp3', 
+                                   './assets/audio/1/1_3_3.mp3', 
+                                   './assets/audio/1/1_3_4.mp3', 
+                            ],
+                        description: '对黄宾虹作品，最精辟的评论之一是“整体具象，局部抽象”。',
+                    },
+                    {
+                        id: '2-6',
+                        title: '黄山五龙潭图轴',
+                         imageUrl: './assets/images/1/1_4.jpg',
+                        audioUrl: ['./assets/audio/1/1_4_1.mp3', 
+                                   './assets/audio/1/1_4_2.mp3', 
+                                                                    
+                            ],
+                        description: '在1997年，非洲的加纳把它选入了一套黄宾虹的山水邮票里，让它成为了代表中国艺术走向世界的一枚文化名片。',
+                    },
+                    {
+                        id: '2-7',
+                        title: '黄山野卉图轴',
+                         imageUrl: './assets/images/1/1_5.jpg',
+                        audioUrl: ['./assets/audio/1/1_5_1.mp3', 
+                                   './assets/audio/1/1_5_2.mp3', 
+                                   './assets/audio/1/1_5_3.mp3', 
+                                    
+                            ],
+                        description: '画面气息淡雅清新，仿佛那深谷中的野卉，刚刚经过一场山雨的洗礼，清气袭人。',
+                    },
+                    {
+                       id: '2-8',
+                        title: '第二站：广西',
+                        imageUrl: './assets/images/1/2.jpg',
+                        audioUrl: ['./assets/audio/1/2_0_1.mp3', 
+                                   './assets/audio/1/2_0_2.mp3', 
+                        ],
+                        description: '黄宾虹骨子里敢于革命、敢于接受新事物。这种性格，并没有随着岁月消失，而是转化到了他的画布上。',
+                    },
+                    {
+                        id: '2-9',
+                        title: '桂林象鼻山图',
+                        imageUrl: './assets/images/1/2_1.jpg',
+                        audioUrl: ['./assets/audio/1/2_1.mp3', 
+                                  
+                            ],
+                        description: '黄宾虹并不是被动地描摹对象，而是主动地表现自己“心目中的象鼻山”。',
+                    },
+                    {
+                        id: '2-10',
+                        title: '第三站：粤港',
+                         imageUrl: './assets/images/1/3.jpg',
+                        audioUrl: ['./assets/audio/1/3_0.mp3',       
+                                    
+                            ],
+                        description: '最懂他画作价值的第一批藏家和知音，也多来自岭南地区。',
+                    },
+                    {
+                        id: '2-11',
+                        title: '为黄居素作山水图轴',
+                         imageUrl: './assets/images/1/3_1.jpg',
+                        audioUrl: ['./assets/audio/1/3_1_1.mp3', 
+                                   './assets/audio/1/3_1_2.mp3', 
+                                   './assets/audio/1/3_1_3.mp3', 
+                                  
+                            ],
+                        description: '在远山与近景之间，横亘着一道长长白色的云烟，像龙蛇一样蜿蜒游走。',
+                    },
+                    {
+                       id: '2-12',
+                        title: '蔡守与黄宾虹',
+                        imageUrl: './assets/images/1/3_2.jpg',
+                        audioUrl: ['./assets/audio/1/3_2_1.mp3', 
+                                   './assets/audio/1/3_2_2.mp3', 
+                        ],
+                        description: '这对好朋友，当年曾有过一个非常超前的想法。',
+                    },
+                    {
+                        id: '2-13',
+                        title: '香港黄泥涌峡写生稿',
+                        imageUrl: './assets/images/1/3_3.jpg',
+                        audioUrl: ['./assets/audio/1/3_3_1.mp3', 
+                                   './assets/audio/1/3_3_2.mp3',
+                            ],
+                        description: '后来，黄宾虹将自己一生悟得的笔墨精髓，浓缩成一张《太极笔法图》，赠给了顾飞。',
+                    },
+                    {
+                        id: '2-14',
+                        title: '第四站：四川',
+                         imageUrl: './assets/images/1/4.jpg',
+                        audioUrl: ['./assets/audio/1/4_0_1.mp3',       
+                                   './assets/audio/1/4_0_2.mp3', 
+                            ],
+                        description: '真正的艺术蜕变，既源于天地自然的启发，也来自对传统的深刻理解。',
+                    },
+                    {
+                        id: '2-15',
+                        title: '蜀中山水图轴',
+                         imageUrl: './assets/images/1/4_1.jpg',
+                        audioUrl: ['./assets/audio/1/4_1_1.mp3',       
+                                   './assets/audio/1/4_1_2.mp3', 
+                            ],
+                        description: '这种构图，明显是继承了北宋山水画那种“巨碑式”的宏伟气象。',
+                    },
+
+                    {
+                        id: '2-16',
+                        title: '第五站：浙江',
+                         imageUrl: './assets/images/1/5.jpg',
+                        audioUrl: ['./assets/audio/1/5_0.mp3', 
+                                                                 
+                            ],
+                        description: '浙江，是黄宾虹人生开启、和落幕之地。',
+                      },
+                      {
+                        id: '2-17',
+                        title: '西溪归棹图轴',
+                         imageUrl: './assets/images/1/5_1.jpg',
+                        audioUrl: ['./assets/audio/1/5_1_1.mp3', 
+                                   './assets/audio/1/5_1_2.mp3', 
+                                   './assets/audio/1/5_1_3.mp3', 
+                                  
+                            ],
+                        description: '好的艺术没有高低之分，正如美食各有千秋。艺术的多样性，极大地丰富了我们感受世界的维度。',
+                    },
+                    {
+                        id: '2-18',
+                        title: '雁宕诸峰图轴',
+                         imageUrl: './assets/images/1/5_2.jpg',
+                        audioUrl: ['./assets/audio/1/5_2_1.mp3', 
+                                   './assets/audio/1/5_2_2.mp3', 
+                                                                    
+                            ],
+                        description: '他试图让笔墨，不再仅仅服务于“画得像”这个目标。而是让点、线、墨色本身，就成为审美的核心。',
+                    },
+                    {
+                        id: '2-19',
+                        title: '西泠桥上望南北高峰图轴',
+                         imageUrl: './assets/images/1/5_3.jpg',
+                        audioUrl: ['./assets/audio/1/5_3_1.mp3', 
+                                   './assets/audio/1/5_3_2.mp3', 
+                                   './assets/audio/1/5_3_3.mp3', 
+                                    
+                            ],
+                        description: '这幅1954年的作品，既保留了失明时期那“无法之法”的自由挥洒，又有着复明后对细节的精准把控。',
+                    },
+
+                ],
+            },
+            {
+                id: 'unit-3',
+                title: '第二单元',
+                subtitle: '浑金朴石入画来',
+                items: [
+                    {
+                        id: '3-1',
+                        title: '序言',
+                        imageUrl: './assets/images/2/0.jpg',
+                        audioUrl: ['./assets/audio/2/0.mp3', 
+                                                                
+                            ],
+                        description: '那些经历了几千年风雨侵蚀的商周金文、汉魏石刻，虽然看起来残缺斑驳，但它们拥有一种令人震撼的原始生命力和历史厚度。',
+                    },
+                    {
+                        id: '3-2',
+                        title: '集篆文“陆子许君”七言联',
+                        imageUrl: './assets/images/2/1.jpg',
+                        audioUrl: ['./assets/audio/2/1_1.mp3', 
+                                   './assets/audio/2/1_2.mp3',                                  
+                                    
+                            ],
+                        description: '他追求的，是商周青铜器和甲骨文那种“天真烂漫”、“外表不齐”的古朴感。',
+                    },
+                    {
+                        id: '3-3',
+                        title: '黄宾虹藏古玺印',
+                        imageUrl: './assets/images/2/2.jpg',
+                        audioUrl: ['./assets/audio/2/2_1.mp3', 
+                                   './assets/audio/2/2_2.mp3',                               
+                                    
+                            ],
+                        description: '对他而言，古玺印不仅是收藏。古玺印中蕴含的“金石气韵”，正是他日后“笔墨内美”的根源。',
+                    },
+                    {
+                        id: '3-4',
+                        title: '巨然墨法图轴',
+                        imageUrl: './assets/images/2/3.jpg',
+                        audioUrl: ['./assets/audio/2/3_1.mp3', 
+                                   './assets/audio/2/3_2.mp3', 
+                                    
+                            ],
+                        description: '“意远在能静，境深尤贵曲。” 意思是：悠远的意境来自“静”，深邃的境界来自“曲”。',
+                    },
+
+                   {
+                        id: '3-5',
+                        title: '简笔山水图轴',
+                        imageUrl: './assets/images/2/4.jpg',
+                        audioUrl: ['./assets/audio/2/4_1.mp3', 
+                                   './assets/audio/2/4_2.mp3', 
+                                    
+                            ],
+                        description: '真正的“简”，不是简单的简化，而是在拥有了“扛鼎”般的深厚功力后，对自然万物进行的高度概括和提炼。',
+                    },
+                    {
+                        id: '3-6',
+                        title: '集篆文“和声平顶”七言联',
+                        imageUrl: './assets/images/2/5.jpg',
+                        audioUrl: ['./assets/audio/2/5_1.mp3', 
+                                   './assets/audio/2/5_2.mp3', 
+                                    
+                            ],
+                        description: '风吹竹响，凤鸟飞来；高山云海，古松如龙。',
+                    },
+                ],
+            },
+         {
+                id: 'unit-4',
+                title: '第三单元',
+                subtitle: '写将浑厚华滋意 ',
+                items: [
+                    {
+                        id: '4-1',
+                        title: '序言',
+                        imageUrl: './assets/images/3/0.jpg',
+                        audioUrl: ['./assets/audio/3/0.mp3', 
+                                                                
+                            ],
+                        description: '这种深沉博大、生机勃勃的气象，正是中华民族内在精神与生命力的体现。',
+                    },
+                    {
+                        id: '4-2',
+                        title: '松谷鸣泉图轴',
+                        imageUrl: './assets/images/3/1.jpg',
+                        audioUrl: ['./assets/audio/3/1_1.mp3', 
+                                   './assets/audio/3/1_2.mp3',                          
+                            ],
+                        description: '他之所以是大师、是现代山水画的拓荒者。是因为他用书法重构了画法。把山水画从“皴法套路”中解放了出来！',
+                    },
+                    {
+                        id: '4-3',
+                        title: '溪山深处图轴',
+                        imageUrl: './assets/images/3/2.jpg',
+                        audioUrl: ['./assets/audio/3/2_1.mp3', 
+                                   './assets/audio/3/2_2.mp3', 
+                                   './assets/audio/3/2_3.mp3',
+                            ],
+                        description: '我们仿佛能跟随笔触，体会到那份“襟袖欲湿”的清凉与湿润。',
+                    },
+                    {
+                        id: '4-4',
+                        title: '山水图轴',
+                        imageUrl: './assets/images/3/3.jpg',
+                        audioUrl: ['./assets/audio/3/3_1.mp3', 
+                                   './assets/audio/3/3_2.mp3', 
+                                   './assets/audio/3/3_3.mp3',
+                            ],
+                        description: '留白的水面上，一人撑着扁舟，缓缓而行。这一笔动势，为静谧的山水，注入了“独钓寒江雪”般的——诗意与生气。',
+                    },
+                    {
+                        id: '4-5',
+                        title: '山水图轴',
+                        imageUrl: './assets/images/3/4.jpg',
+                        audioUrl: ['./assets/audio/3/4_1.mp3', 
+                                   './assets/audio/3/4_2.mp3', 
+                                   './assets/audio/3/4_3.mp3',
+                            ],
+                        description: '傅雷，既是他艺术的“独具慧眼”者，也是他理论探索上的“同道中人”，更是他事业发展上的“有力推手”。',
+                    },
+                    {
+                        id: '4-6',
+                        title: '夜山图轴',
+                        imageUrl: './assets/images/3/5.jpg',
+                        audioUrl: ['./assets/audio/3/5_1.mp3', 
+                                   './assets/audio/3/5_2.mp3', 
+                                   './assets/audio/3/5_3.mp3',
+                            ],
+                        description: '屋舍门前那一抹留白，犹如淡淡的月光洒在地上，静谧动人，引人遐思，这定是隐士的居所。',
+                    },
+{
+                        id: '4-7',
+                        title: '结语',
+                        imageUrl: './assets/images/3/6.jpg',
+                        audioUrl: ['./assets/audio/3/6_1.mp3', 
+                                   './assets/audio/3/6_2.mp3', 
+                                   
+                            ],
+                        description: '种善因，结善果。',
+                    },
+
+                ],
+            },        
+        ];
+
+        // ==========================================
+        // 2. STATE MANAGEMENT
+        // ==========================================
+        let activeUnitId = EXHIBITION_DATA[0].id;
+
+        // ==========================================
+        // 3. DOM ELEMENTS
+        // ==========================================
+        const navContainer = document.getElementById('nav-tabs');
+        const mainContent = document.getElementById('main-content');
+
+        // ==========================================
+        // 4. RENDER FUNCTIONS
+        // ==========================================
+
+        /**
+         * Renders the navigation tabs based on the current activeUnitId.
+         */
+        function renderNav() {
+            navContainer.innerHTML = EXHIBITION_DATA.map(unit => {
+                const isActive = unit.id === activeUnitId;
+                const activeClass = isActive 
+                    ? 'bg-rust text-white shadow-md' 
+                    : 'bg-transparent text-gray-600 hover:bg-white hover:text-rust';
+                
+                return `
+                    <button 
+                        onclick="switchUnit('${unit.id}')"
+                        class="whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeClass}"
+                    >
+                        ${unit.title}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        /**
+         * Renders the content (Title + List of Items) for the active unit.
+         */
+        function renderContent() {
+            const unit = EXHIBITION_DATA.find(u => u.id === activeUnitId);
+            if (!unit) return;
+
+            // 1. Render Unit Header
+            let html = `
+                <div class="text-center mb-8 mt-4 animate-fadeIn">
+                    <h2 class="font-serif text-3xl font-bold text-ink mb-2">${unit.title}</h2>
+                    <div class="h-1 w-12 bg-rust mx-auto rounded-full mb-3"></div>
+                    <p class="font-serif text-lg text-gray-500 italic">${unit.subtitle}</p>
+                </div>
+                <div class="space-y-4">
+            `;
+
+            // 2. Render Items (Accordion Cards)
+            html += unit.items.map((item, index) => `
+                <div class="border border-stone-border bg-white rounded-xl overflow-hidden mb-4 shadow-sm transition-shadow duration-300 hover:shadow-md animate-fadeIn">
+                    
+                    <!-- Accordion Header -->
+                    <button 
+                        onclick="toggleAccordion('${item.id}')"
+                        class="w-full text-left px-5 py-4 flex justify-between items-center focus:outline-none focus:bg-gray-50 active:bg-gray-100 transition-colors"
+                        id="btn-${item.id}"
+                        aria-expanded="false"
+                    >
+                        <span class="font-serif text-lg text-ink font-medium transition-colors" id="title-${item.id}">
+                            ${item.title}
+                        </span>
+                        <span class="text-rust-light ml-3 flex-shrink-0 transition-transform duration-300" id="icon-${item.id}">
+                            <!-- Chevron Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </span>
+                    </button>
+
+                    <!-- Accordion Body (Hidden by default) -->
+                    <div id="content-${item.id}" class="hidden bg-white">
+                        <div class="px-5 pb-6 pt-2">
+                            <!-- Image -->
+                            <div class="mb-4 rounded-lg overflow-hidden bg-gray-100 border border-stone-border/50">
+                                <img 
+                                    src="${item.imageUrl}" 
+                                    alt="${item.title}" 
+                                    class="w-full h-auto object-cover max-h-[400px]"
+                                    loading="lazy"
+                                >
+                            </div>
+
+                            <!-- Description -->
+                            <p class="text-sm leading-relaxed text-gray-600 mb-5 font-sans">
+                                ${item.description}
+                            </p>
+
+                            <!-- Audio Player -->
+                            
+
+<div class="bg-paper p-4 rounded-lg border border-stone-border space-y-4">
+                                <div class="flex items-center space-x-2 mb-3 border-b border-stone-border/50 pb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-rust" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="text-xs font-bold text-rust uppercase tracking-wider">语音导览 (Audio Guide)</span>
+                                </div>
+
+                                ${
+                                    // 1. 确保它是数组
+                                    (Array.isArray(item.audioUrl) ? item.audioUrl : [item.audioUrl]).map((url, i, arr) => {
+                                        
+                                        // 2. 生成“身份证号”：比如 audio-1-1-0 (作品ID-第几段)
+                                        const currentId = `audio-${item.id}-${i}`;
+                                        const nextId = `audio-${item.id}-${i + 1}`;
+                                        
+                                        // 3. 判断有没有下一首
+                                        const hasNext = i < arr.length - 1;
+
+                                        // 4. 核心逻辑：如果不止一首，且不是最后一首，就生成“自动播放下一首”的指令
+                                        // 指令意思：当这个播完(onended)，去找下一个ID，然后 play()
+                                        const autoPlayLogic = hasNext 
+                                            ? `document.getElementById('${nextId}').play()` 
+                                            : '';
+
+                                        return `
+                                        <div class="bg-white/50 rounded p-2 transition-all hover:bg-white border border-transparent hover:border-stone-border/30">
+                                            <div class="text-[10px] text-gray-500 font-medium mb-1 ml-1 flex justify-between">
+                                                <span>第 ${i + 1} 部分</span>
+                                                <span class="opacity-50">${i + 1} / ${arr.length}</span>
+                                            </div>
+                                            
+                                            <audio 
+                                                id="${currentId}"
+                                                controls 
+                                                preload="metadata"
+                                                class="w-full h-8"
+                                                src="${url}"
+                                                onended="${autoPlayLogic}"
+                                            ></audio>
+                                        </div>
+                                        `;
+                                    }).join('')
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            html += `</div>
+                <div class="text-center mt-12 mb-8 text-gray-400 text-sm">
+                    <p>— End of ${unit.title} —</p>
+                </div>
+            `;
+
+            mainContent.innerHTML = html;
+        }
+
+        // ==========================================
+        // 5. INTERACTION FUNCTIONS
+        // ==========================================
+
+        /**
+         * Switches the active unit, updates UI, and scrolls to top.
+         */
+        function switchUnit(id) {
+            if (activeUnitId === id) return;
+            activeUnitId = id;
+            renderNav();
+            renderContent();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /**
+         * Toggles the accordion state for a specific item.
+         */
+        function toggleAccordion(itemId) {
+            const content = document.getElementById(`content-${itemId}`);
+            const icon = document.getElementById(`icon-${itemId}`);
+            const title = document.getElementById(`title-${itemId}`);
+            const btn = document.getElementById(`btn-${itemId}`);
+            
+            const isHidden = content.classList.contains('hidden');
+
+            if (isHidden) {
+                // Open
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180', 'text-rust');
+                icon.classList.remove('text-rust-light');
+                title.classList.add('text-rust', 'font-bold');
+                title.classList.remove('text-ink', 'font-medium');
+                btn.setAttribute('aria-expanded', 'true');
+            } else {
+                // Close
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-180', 'text-rust');
+                icon.classList.add('text-rust-light');
+                title.classList.remove('text-rust', 'font-bold');
+                title.classList.add('text-ink', 'font-medium');
+                btn.setAttribute('aria-expanded', 'false');
+                
+                // Optional: Pause audio when closing
+                const audio = content.querySelector('audio');
+                if (audio) audio.pause();
+            }
+        }
+
+        // ==========================================
+        // 6. INITIALIZATION
+        // ==========================================
+        (function init() {
+            renderNav();
+            renderContent();
+        })();
+
+
+// === 终极防错版自动播放 JS ===
+function playNextPartSelf(player) {
+    // 1. 从标签里取出播放列表
+    const playlist = JSON.parse(player.getAttribute('data-playlist'));
+    
+    // 2. 获取当前播到第几段
+    let part = parseInt(player.getAttribute('data-part')) || 0;
+
+    // 3. 如果还有下一段
+    if (part < playlist.length - 1) {
+        part++; 
+        player.src = playlist[part]; // 切换链接
+        player.setAttribute('data-part', part); // 更新标记
+        player.play(); // 继续播放
+    }
+}
+
+    </script>
+</body>
+</html>
